@@ -17,7 +17,7 @@ class RenameNotification extends Command
         $oldType = Str::replace('/', '\\', $this->argument('oldType'));
         $newType = Str::replace('/', '\\', $this->argument('newType'));
 
-        if (!class_exists($newType)) {
+        if (! class_exists($newType)) {
             $this->error("The class {$newType} does not exist.");
         }
 

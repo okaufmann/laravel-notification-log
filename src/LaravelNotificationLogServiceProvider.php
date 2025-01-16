@@ -4,11 +4,12 @@ namespace Okaufmann\LaravelNotificationLog;
 
 use Illuminate\Notifications\ChannelManager as BaseChannelManager;
 use Illuminate\Support\Facades\Event;
+use Okaufmann\LaravelNotificationLog\Commands\RenameNotification;
 use Okaufmann\LaravelNotificationLog\Listeners\NotificationEventListener;
 use Okaufmann\LaravelNotificationLog\Manager\ChannelManager;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Okaufmann\LaravelNotificationLog\Commands\RenameNotification;
+
 class LaravelNotificationLogServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
@@ -19,7 +20,7 @@ class LaravelNotificationLogServiceProvider extends PackageServiceProvider
             ->hasMigrations(['create_notification_logs_sent_notifications_table'])
             ->hasCommands(
                 RenameNotification::class,
-            );;
+            );
     }
 
     public function packageBooted()
