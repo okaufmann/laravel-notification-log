@@ -8,7 +8,7 @@ use Okaufmann\LaravelNotificationLog\Listeners\NotificationEventListener;
 use Okaufmann\LaravelNotificationLog\Manager\ChannelManager;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-
+use Okaufmann\LaravelNotificationLog\Commands\RenameNotification;
 class LaravelNotificationLogServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
@@ -16,7 +16,10 @@ class LaravelNotificationLogServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-notification-log')
             ->hasConfigFile()
-            ->hasMigrations(['create_notification_logs_sent_notifications_table']);
+            ->hasMigrations(['create_notification_logs_sent_notifications_table'])
+            ->hasCommands(
+                RenameNotification::class,
+            );;
     }
 
     public function packageBooted()
