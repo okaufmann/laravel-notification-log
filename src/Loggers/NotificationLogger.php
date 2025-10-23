@@ -193,6 +193,10 @@ class NotificationLogger
         $channel = $channelManager->driver($channel);
 
         try {
+            if (method_exists($notification, 'resolveMessageForLogging')) {
+                return $notification->resolveMessageForLogging();
+            }
+
             if ($channel instanceof MailChannel) {
                 $message = $notification->toMail($notifiable);
 
