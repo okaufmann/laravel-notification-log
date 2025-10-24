@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use Okaufmann\LaravelNotificationLog\Contracts\ResendableNotification;
+use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLogging;
 use Okaufmann\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Okaufmann\LaravelNotificationLog\Models\SentNotificationLog;
 use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
@@ -173,6 +174,12 @@ class NotificationLogger
             return $notificationLog;
         }
 
+        // since Laravel v12.11.0 https://github.com/laravel/framework/releases/tag/v12.11.0 sendToNotifiable is finally raising a NotificationFailed
+        // we need to write the message to keep backward compatibility
+        if (isset($event->data['exception']) && $event->data['exception'] instanceof \Exception) {
+            $event->data['message'] = $event->data['exception']->getMessage();
+        }
+
         $notificationLog = $this->getNotificationModelType()::updateOrCreate(
             $findData,
             [
@@ -193,8 +200,10 @@ class NotificationLogger
         $channel = $channelManager->driver($channel);
 
         try {
-            if (method_exists($notification, 'resolveMessageForLogging')) {
-                return $notification->resolveMessageForLogging();
+            if ($notification instanceof ResolveMessageForLogging) {
+                $message = $notification->resolveMessageForLogging($channel, $notifiable);
+
+                return $message;
             }
 
             if ($channel instanceof MailChannel) {

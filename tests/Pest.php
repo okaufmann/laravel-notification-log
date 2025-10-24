@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Okaufmann\LaravelNotificationLog\Tests\TestCase;
 
-uses(TestCase::class)->in(__DIR__.'/Feature');
+uses(TestCase::class)->in(__DIR__);
 
 expect()->extend('toBeModel', function (?object $model) {
     if (is_null($model)) {

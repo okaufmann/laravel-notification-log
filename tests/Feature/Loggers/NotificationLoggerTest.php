@@ -81,10 +81,10 @@ it('can update a notification once it is sent', function () {
         'notification_type' => get_class($notification),
         'notifiable_id' => $notifiable->getKey(),
         'notifiable_type' => get_class($notifiable),
-        'queued' => false,
+        'queued' => 0,
         'channel' => 'database',
-        'message' => json_encode(['message' => 'This is just a example message.']),
-        'data' => json_encode(['response' => ['message' => 'dummy response']]),
+        'message->message' => 'This is just a example message.',
+        'data->response->message' => 'dummy response',
         'status' => NotificationDeliveryStatus::SENT,
         'attempt' => 1,
         'sent_at' => now(),
@@ -107,13 +107,11 @@ it('can log a failed notification', function () {
         'notification_type' => get_class($notification),
         'notifiable_id' => $notifiable->getKey(),
         'notifiable_type' => get_class($notifiable),
-        'queued' => false,
+        'queued' => 0,
         'channel' => 'database',
         'message' => null,
         'status' => NotificationDeliveryStatus::FAILED,
-        'data' => json_encode([
-            'message' => 'Notification could not be sent!',
-        ], JSON_THROW_ON_ERROR),
+        'data->message' => 'Notification could not be sent!',
         'attempt' => 1,
         'sent_at' => null,
         'notification_serialized' => null,
@@ -136,18 +134,15 @@ it('does not log a failed notification twice', function () {
         'notification_type' => get_class($notification),
         'notifiable_id' => $notifiable->getKey(),
         'notifiable_type' => get_class($notifiable),
-        'queued' => false,
+        'queued' => 0,
         'channel' => 'test',
         'message' => null,
         'status' => NotificationDeliveryStatus::FAILED,
-        'data' => json_encode([
-            'message' => 'could not send notification!',
-        ], JSON_THROW_ON_ERROR),
+        'data->message' => 'could not send notification!',
         'attempt' => 1,
         'sent_at' => null,
         'notification_serialized' => null,
     ]);
-
 });
 
 it('can log a notification sent to a anonymous notifiable', function () {
@@ -206,7 +201,8 @@ it('it also logs notification extra data', function () {
         'notifiable_id' => $notifiable->getKey(),
         'notifiable_type' => get_class($notifiable),
         'channel' => 'database',
-        'data' => json_encode(['extra' => 'data', 'response' => ['message' => 'dummy response']]),
+        'data->extra' => 'data',
+        'data->response->message' => 'dummy response',
         'notification_serialized' => null,
     ]);
 });
