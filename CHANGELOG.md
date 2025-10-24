@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## 5.2.0 - 2025-10-24
+
+### What's Changed
+
+* Resolving Messages After Sending by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/16
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.1.0...5.2.0
+
 ## 5.1.0 - 2025-10-24
 
 ### What's Changed
@@ -102,11 +110,13 @@ return new class extends Migration {
 
 
 
+
 ```
 Also you may want to publish the configs by running
 
 ```shell
 php artisan vendor:publish --tag="notification-log-config"
+
 
 
 
@@ -225,6 +235,7 @@ return new class extends Migration {
         return $data;
     }
 };
+
 
 
 
