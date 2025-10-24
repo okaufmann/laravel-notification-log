@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use JsonSerializable;
 use Okaufmann\LaravelNotificationLog\Contracts\ResendableNotification;
 use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLogging;
+use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLoggingAfterSent;
 use Okaufmann\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Okaufmann\LaravelNotificationLog\Models\SentNotificationLog;
 use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
@@ -132,6 +133,14 @@ class NotificationLogger
             ...$this->buildSentChannelData($event->channel, $event->notification, $event->notifiable, $event->response),
             'response' => $this->formatResponse($event->response),
         ];
+
+        // Resolve message after sending if the notification implements the interface and config is enabled
+        if (config('notification-log.resolve_notification_message')) {
+            $resolvedMessage = $this->resolveMessageAfterSent($event->channel, $event->notification, $event->notifiable, $event->response);
+            if ($resolvedMessage !== null) {
+                $sentNotificationLog->message = $resolvedMessage;
+            }
+        }
 
         $sentNotificationLog->status = NotificationDeliveryStatus::SENT;
         $sentNotificationLog->sent_at = now();
@@ -266,6 +275,32 @@ class NotificationLogger
                 if (method_exists($notification, 'toArray')) {
                     return json_encode($notification->toArray($notifiable));
                 }
+            }
+
+            return null;
+        } catch (\Throwable $e) {
+            if (app()->runningUnitTests()) {
+                throw $e;
+            }
+
+            return null;
+        }
+    }
+
+    public function resolveMessageAfterSent(string $channel, Notification $notification, $notifiable, $response): ?string
+    {
+        if (! config('notification-log.resolve_notification_message')) {
+            return null;
+        }
+
+        $channelManager = resolve(ChannelManager::class);
+        $channel = $channelManager->driver($channel);
+
+        try {
+            if ($notification instanceof ResolveMessageForLoggingAfterSent) {
+                $message = $notification->resolveMessageForLoggingAfterSent($channel, $notifiable, $response);
+
+                return $message;
             }
 
             return null;

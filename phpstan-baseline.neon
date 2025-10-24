@@ -67,6 +67,24 @@ parameters:
 			path: tests/Feature/ArchTest.php
 
 		-
+			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$logger\.$#'
+			identifier: property.notFound
+			count: 9
+			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
+
+		-
+			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$notification\.$#'
+			identifier: property.notFound
+			count: 5
+			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
+
+		-
+			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 10
+			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
+
+		-
 			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$notifiable\.$#'
 			identifier: property.notFound
 			count: 12
