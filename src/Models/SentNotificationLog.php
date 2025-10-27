@@ -50,6 +50,7 @@ class SentNotificationLog extends Model
         'data' => 'json',
         'anonymous_notifiable_routes' => 'array',
         'status' => NotificationDeliveryStatus::class,
+        'sent_at' => 'immutable_datetime',
     ];
 
     public function prunable(): Builder
