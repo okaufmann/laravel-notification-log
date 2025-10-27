@@ -143,7 +143,7 @@ class NotificationLogger
         }
 
         $sentNotificationLog->status = NotificationDeliveryStatus::SENT;
-        $sentNotificationLog->sent_at = now();
+        $sentNotificationLog->sent_at = now()->toImmutable();
         $sentNotificationLog->data = $data;
 
         $sentNotificationLog->save();
