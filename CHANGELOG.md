@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v6.0.0 - 2026-03-23
+
+### What's Changed
+
+* chore(deps): bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/20
+* Add Laravel 13 Support by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/22
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.2.2...v6.0.0
+
 ## 5.2.2 - 2025-10-27
 
 ### What's Changed
@@ -129,11 +138,13 @@ return new class extends Migration {
 
 
 
+
 ```
 Also you may want to publish the configs by running
 
 ```shell
 php artisan vendor:publish --tag="notification-log-config"
+
 
 
 
@@ -255,6 +266,7 @@ return new class extends Migration {
         return $data;
     }
 };
+
 
 
 
