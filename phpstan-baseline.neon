@@ -49,3 +49,24 @@ parameters:
 			message: "#^Method Okaufmann\\\\LaravelNotificationLog\\\\Models\\\\SentNotificationLog\\:\\:latestFor\\(\\) should return Okaufmann\\\\LaravelNotificationLog\\\\Models\\\\SentNotificationLog\\|null but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
 			count: 1
 			path: src/Models/SentNotificationLog.php
+
+		-
+			message: "#^Called 'env' outside of the config directory#"
+			count: 2
+			path: config/notification-log.php
+
+		-
+			identifier: trait.unused
+			path: src/Models/Concerns/HandlesResending.php
+
+		-
+			identifier: trait.unused
+			path: src/Models/Concerns/HasHistory.php
+
+		-
+			identifier: trait.unused
+			path: src/Models/Concerns/HasNotifiableHistory.php
+
+		-
+			identifier: trait.unused
+			path: src/Models/Concerns/LogsNotifications.php
