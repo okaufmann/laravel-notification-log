@@ -5,6 +5,7 @@ namespace Okaufmann\LaravelNotificationLog\Tests\Feature\Loggers;
 use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
 use Okaufmann\LaravelNotificationLog\Loggers\NotificationLogger;
+use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotification;
 use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotificationWithResolveMessageAfterSent;
 use Okaufmann\LaravelNotificationLog\Tests\Support\TestUser;
 
@@ -43,7 +44,7 @@ it('resolves message after sending when notification implements ResolveMessageFo
 });
 
 it('does not update message if notification does not implement ResolveMessageForLoggingAfterSent', function () {
-    $notification = new \Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotification;
+    $notification = new DummyNotification;
 
     // First, log the sending notification
     $sendingEvent = new NotificationSending(
