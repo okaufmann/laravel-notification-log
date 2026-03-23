@@ -1,6 +1,6 @@
 name: Run Tests
 
-on: ['push', 'pull_request']
+on: ["push", "pull_request"]
 
 jobs:
   test:
@@ -42,4 +42,4 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest --enforce-time-limit --fail-on-risky
+        run: vendor/bin/pest --enforce-time-limit --fail-on-risky --no-coverage
