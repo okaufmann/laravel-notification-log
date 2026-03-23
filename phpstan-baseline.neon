@@ -1,193 +1,72 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:latestLoggedNotificationQuery\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:latestLoggedNotificationQuery\\(\\)\\.$#"
 			count: 1
 			path: src/Database/NotificationHistoryQueryBuilder.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:getCurrentAttempt\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:getCurrentAttempt\\(\\)\\.$#"
 			count: 2
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toMail\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toMail\\(\\)\\.$#"
 			count: 2
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toSlack\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toSlack\\(\\)\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toTelegram\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toTelegram\\(\\)\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toTwilio\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toTwilio\\(\\)\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toVonage\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toVonage\\(\\)\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Notifications\\Notification\:\:toWebPush\(\)\.$#'
-			identifier: method.notFound
+			message: "#^Call to an undefined method Illuminate\\\\Notifications\\\\Notification\\:\\:toWebPush\\(\\)\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Call to function is_null\(\) with mixed will always evaluate to false\.$#'
-			identifier: function.impossibleType
+			message: "#^Call to function is_null\\(\\) with mixed will always evaluate to false\\.$#"
 			count: 1
 			path: src/Loggers/NotificationLogger.php
 
 		-
-			message: '#^Method Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\:\:latestFor\(\) should return Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
-			identifier: return.type
+			message: "#^Method Okaufmann\\\\LaravelNotificationLog\\\\Models\\\\SentNotificationLog\\:\\:latestFor\\(\\) should return Okaufmann\\\\LaravelNotificationLog\\\\Models\\\\SentNotificationLog\\|null but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
 			count: 1
 			path: src/Models/SentNotificationLog.php
 
 		-
-			message: '#^Call to an undefined method Pest\\PendingCalls\\TestCall\:\:expect\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/Feature/ArchTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$logger\.$#'
-			identifier: property.notFound
-			count: 9
-			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$notification\.$#'
-			identifier: property.notFound
-			count: 5
-			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$user\.$#'
-			identifier: property.notFound
-			count: 10
-			path: tests/Feature/Loggers/NotificationLoggerResolveMessageAfterSentTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$notifiable\.$#'
-			identifier: property.notFound
-			count: 12
-			path: tests/Feature/Models/Concerns/HasHistoryTest/WasNotSentToTest.php
-
-		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:wasNotSentTo\(\)\.$#'
-			identifier: method.notFound
-			count: 6
-			path: tests/Feature/Models/Concerns/HasHistoryTest/WasNotSentToTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$notifiable\.$#'
-			identifier: property.notFound
-			count: 14
-			path: tests/Feature/Models/Concerns/HasHistoryTest/WasSentToTest.php
-
-		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase\:\:wasSentTo\(\)\.$#'
-			identifier: method.notFound
-			count: 7
-			path: tests/Feature/Models/Concerns/HasHistoryTest/WasSentToTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$anotherUser\.$#'
-			identifier: property.notFound
-			count: 3
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$firstUser1Log\.$#'
-			identifier: property.notFound
-			count: 1
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$firstUser2Log\.$#'
-			identifier: property.notFound
+			message: "#^Called 'env' outside of the config directory#"
 			count: 2
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
+			path: config/notification-log.php
 
 		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$secondUser1Log\.$#'
-			identifier: property.notFound
-			count: 2
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
+			identifier: trait.unused
+			path: src/Models/Concerns/HandlesResending.php
 
 		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$user\.$#'
-			identifier: property.notFound
-			count: 4
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
+			identifier: trait.unused
+			path: src/Models/Concerns/HasHistory.php
 
 		-
-			message: '#^Call to an undefined method Pest\\Expectation\<mixed\>\:\:toBeModel\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/Feature/Models/Concerns/HasNotifiableHistoryTest.php
+			identifier: trait.unused
+			path: src/Models/Concerns/HasNotifiableHistory.php
 
 		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$anotherUser\.$#'
-			identifier: property.notFound
-			count: 3
-			path: tests/Feature/Models/SentNotificationLogTest.php
-
-		-
-			message: '#^Access to an undefined property PHPUnit\\Framework\\TestCase\:\:\$user\.$#'
-			identifier: property.notFound
-			count: 30
-			path: tests/Feature/Models/SentNotificationLogTest.php
-
-		-
-			message: '#^Call to an undefined method Pest\\Expectation\<Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\|null\>\:\:toBeModel\(\)\.$#'
-			identifier: method.notFound
-			count: 8
-			path: tests/Feature/Models/SentNotificationLogTest.php
-
-		-
-			message: '#^Call to an undefined method Pest\\Expectation\<Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\|null\>\:\:toHaveCreationDate\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: tests/Feature/Models/SentNotificationLogTest.php
-
-		-
-			message: '#^Property Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\:\:\$notification_serialized \(string\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Feature/Models/SentNotificationLogTest.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 4
-			path: tests/Pest.php
-
-		-
-			message: '#^Undefined variable\: \$this$#'
-			identifier: variable.undefined
-			count: 6
-			path: tests/Pest.php
-
-		-
-			message: '#^Method Okaufmann\\LaravelNotificationLog\\Tests\\Support\\TestUser\:\:latestLoggedNotification\(\) should return Okaufmann\\LaravelNotificationLog\\Models\\SentNotificationLog\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: tests/Support/TestUser.php
+			identifier: trait.unused
+			path: src/Models/Concerns/LogsNotifications.php

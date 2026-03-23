@@ -6,10 +6,7 @@ parameters:
     paths:
         - src
         - config
-        - tests
     tmpDir: build/phpstan
+    reportUnmatchedIgnoredErrors: true
     checkOctaneCompatibility: true
     checkModelProperties: true
-    checkModelAppends: true
-    reportUnmatchedIgnoredErrors: true
-    noEnvCallsOutsideOfConfig: false

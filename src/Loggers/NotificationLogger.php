@@ -11,14 +11,22 @@ use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Notifications\Channels\DatabaseChannel;
 use Illuminate\Notifications\Channels\MailChannel;
+use Illuminate\Notifications\Channels\VonageSmsChannel;
 use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Slack\SlackChannel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JsonSerializable;
+use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 use Okaufmann\LaravelNotificationLog\Contracts\ResendableNotification;
 use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLogging;
 use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLoggingAfterSent;
@@ -192,11 +200,31 @@ class NotificationLogger
         $notificationLog = $this->getNotificationModelType()::updateOrCreate(
             $findData,
             [
-                'data' => $event->data,
+                'data' => $this->normalizeFailedNotificationData($event->data),
                 'status' => NotificationDeliveryStatus::FAILED,
             ]);
 
         return $notificationLog;
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function normalizeFailedNotificationData(array $data): array
+    {
+        if (isset($data['exception']) && $data['exception'] instanceof \Throwable) {
+            $exception = $data['exception'];
+            $data['message'] = $data['message'] ?? $exception->getMessage();
+            $data['exception'] = [
+                'class' => $exception::class,
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+            ];
+        }
+
+        return $data;
     }
 
     public function resolveMessage(string $channel, Notification $notification, $notifiable)
@@ -225,42 +253,42 @@ class NotificationLogger
                 return null;
             }
 
-            if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
+            if ($channel instanceof VonageSmsChannel) {
                 $message = $notification->toVonage($notifiable);
 
                 if (is_string($message)) {
-                    $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
+                    $message = new VonageMessage($message);
                 }
 
                 return $message->content;
             }
 
-            if ($channel instanceof \NotificationChannels\Twilio\TwilioChannel) {
+            if ($channel instanceof TwilioChannel) {
                 $message = $notification->toTwilio($notifiable);
 
                 if (is_string($message)) {
-                    $message = new \NotificationChannels\Twilio\TwilioSmsMessage($message);
+                    $message = new TwilioSmsMessage($message);
                 }
 
                 return $message->content;
             }
 
-            if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
+            if ($channel instanceof TelegramChannel) {
                 $message = $notification->toTelegram($notifiable);
                 if (is_string($message)) {
-                    $message = \NotificationChannels\Telegram\TelegramMessage::create($message);
+                    $message = TelegramMessage::create($message);
                 }
 
                 return json_encode($message->toArray());
             }
 
-            if ($channel instanceof \NotificationChannels\WebPush\WebPushChannel) {
+            if ($channel instanceof WebPushChannel) {
                 $message = $notification->toWebPush($notifiable, $notification);
 
                 return json_encode($message->toArray());
             }
 
-            if ($channel instanceof \Illuminate\Notifications\Slack\SlackChannel) {
+            if ($channel instanceof SlackChannel) {
                 $message = $notification->toSlack($notifiable, $notification);
 
                 return json_encode($message->toArray());

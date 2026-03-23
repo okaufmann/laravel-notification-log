@@ -3,6 +3,8 @@
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Okaufmann\LaravelNotificationLog\Loggers\NotificationLogger;
 use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
 use Okaufmann\LaravelNotificationLog\Tests\Support\DummyFailingNotification;
@@ -98,7 +100,7 @@ it('can log a failed notification', function () {
 
     try {
         $notifiable->notify($notification);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
     }
 
     assertDatabaseCount('notification_logs_sent_notifications', 1);
@@ -116,6 +118,10 @@ it('can log a failed notification', function () {
         'sent_at' => null,
         'notification_serialized' => null,
     ]);
+
+    $row = DB::table('notification_logs_sent_notifications')->first();
+    $payload = json_decode($row->data, true, 512, JSON_THROW_ON_ERROR);
+    expect($payload['message'])->toBe('Notification could not be sent!');
 });
 
 it('does not log a failed notification twice', function () {
@@ -124,7 +130,7 @@ it('does not log a failed notification twice', function () {
 
     try {
         $notifiable->notify($notification);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
     }
 
     assertDatabaseCount('notification_logs_sent_notifications', 1);
@@ -146,7 +152,7 @@ it('does not log a failed notification twice', function () {
 });
 
 it('can log a notification sent to a anonymous notifiable', function () {
-    \Illuminate\Support\Facades\View::addLocation('tests/Support/views');
+    View::addLocation('tests/Support/views');
 
     $notifiable = new AnonymousNotifiable;
     $route = fake()->safeEmail();
