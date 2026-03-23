@@ -2,6 +2,64 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## 5.2.2 - 2025-10-27
+
+### What's Changed
+
+* Model type hints by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/18
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.2.1...5.2.2
+
+## 5.2.1 - 2025-10-27
+
+### What's Changed
+
+* Add missing cast for sent_at attribute by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/17
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.2.0...5.2.1
+
+## 5.2.0 - 2025-10-24
+
+### What's Changed
+
+* Resolving Messages After Sending by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/16
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.1.0...5.2.0
+
+## 5.1.0 - 2025-10-24
+
+### What's Changed
+
+* chore(deps): bump aglipanci/laravel-pint-action from 2.3.1 to 2.5 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/7
+* chore(deps): bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/8
+* chore(deps): bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/10
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/13
+* chore(deps): bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/11
+* Pest 4 by @okaufmann in https://github.com/okaufmann/laravel-notification-log/pull/15
+* Add Interface to use resolveMessageForLogging in Notifications https://github.com/okaufmann/laravel-notification-log/commit/6a9fe7c964c52f88e8e78eb269df6599f5776bc2
+
+### New Contributors
+
+* @okaufmann made their first contribution in https://github.com/okaufmann/laravel-notification-log/pull/15
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/5.0.0...5.1.0
+
+## 5.0.0 - 2025-03-09
+
+### What's Changed
+
+* Support Laravel 12
+* chore(deps): bump dependabot/fetch-metadata from 2.1.0 to 2.3.0 by @dependabot in https://github.com/okaufmann/laravel-notification-log/pull/3
+* chore(deps): bump actions/checkout from 3 to 4 by @dependabot in https://github.com/okaufmann/laravel-notification-log/pull/6
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/okaufmann/laravel-notification-log/pull/5
+* chore(deps): bump aglipanci/laravel-pint-action from 1.0.0 to 2.3.1 by @dependabot in https://github.com/okaufmann/laravel-notification-log/pull/4
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/okaufmann/laravel-notification-log/pull/3
+
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/4.6.0...5.0.0
+
 ## 4.6.0 - 2024-10-01
 
 ### What's Changed
@@ -66,11 +124,21 @@ return new class extends Migration {
 
 
 
+
+
+
+
+
 ```
 Also you may want to publish the configs by running
 
 ```shell
 php artisan vendor:publish --tag="notification-log-config"
+
+
+
+
+
 
 
 
@@ -187,6 +255,11 @@ return new class extends Migration {
         return $data;
     }
 };
+
+
+
+
+
 
 
 

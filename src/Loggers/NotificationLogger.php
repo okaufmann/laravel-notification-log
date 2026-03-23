@@ -28,6 +28,8 @@ use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
 use NotificationChannels\WebPush\WebPushChannel;
 use Okaufmann\LaravelNotificationLog\Contracts\ResendableNotification;
+use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLogging;
+use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLoggingAfterSent;
 use Okaufmann\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Okaufmann\LaravelNotificationLog\Models\SentNotificationLog;
 use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
@@ -140,8 +142,16 @@ class NotificationLogger
             'response' => $this->formatResponse($event->response),
         ];
 
+        // Resolve message after sending if the notification implements the interface and config is enabled
+        if (config('notification-log.resolve_notification_message')) {
+            $resolvedMessage = $this->resolveMessageAfterSent($event->channel, $event->notification, $event->notifiable, $event->response);
+            if ($resolvedMessage !== null) {
+                $sentNotificationLog->message = $resolvedMessage;
+            }
+        }
+
         $sentNotificationLog->status = NotificationDeliveryStatus::SENT;
-        $sentNotificationLog->sent_at = now();
+        $sentNotificationLog->sent_at = now()->toImmutable();
         $sentNotificationLog->data = $data;
 
         $sentNotificationLog->save();
@@ -179,6 +189,12 @@ class NotificationLogger
             // most of the time this will be caused by the fact the channel handles failed notifications itself
             // and our custom notification sender caught the exception and fired another FailedNotification event.
             return $notificationLog;
+        }
+
+        // since Laravel v12.11.0 https://github.com/laravel/framework/releases/tag/v12.11.0 sendToNotifiable is finally raising a NotificationFailed
+        // we need to write the message to keep backward compatibility
+        if (isset($event->data['exception']) && $event->data['exception'] instanceof \Exception) {
+            $event->data['message'] = $event->data['exception']->getMessage();
         }
 
         $notificationLog = $this->getNotificationModelType()::updateOrCreate(
@@ -221,6 +237,12 @@ class NotificationLogger
         $channel = $channelManager->driver($channel);
 
         try {
+            if ($notification instanceof ResolveMessageForLogging) {
+                $message = $notification->resolveMessageForLogging($channel, $notifiable);
+
+                return $message;
+            }
+
             if ($channel instanceof MailChannel) {
                 $message = $notification->toMail($notifiable);
 
@@ -281,6 +303,32 @@ class NotificationLogger
                 if (method_exists($notification, 'toArray')) {
                     return json_encode($notification->toArray($notifiable));
                 }
+            }
+
+            return null;
+        } catch (\Throwable $e) {
+            if (app()->runningUnitTests()) {
+                throw $e;
+            }
+
+            return null;
+        }
+    }
+
+    public function resolveMessageAfterSent(string $channel, Notification $notification, $notifiable, $response): ?string
+    {
+        if (! config('notification-log.resolve_notification_message')) {
+            return null;
+        }
+
+        $channelManager = resolve(ChannelManager::class);
+        $channel = $channelManager->driver($channel);
+
+        try {
+            if ($notification instanceof ResolveMessageForLoggingAfterSent) {
+                $message = $notification->resolveMessageForLoggingAfterSent($channel, $notifiable, $response);
+
+                return $message;
             }
 
             return null;

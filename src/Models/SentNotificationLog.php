@@ -2,6 +2,7 @@
 
 namespace Okaufmann\LaravelNotificationLog\Models;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,7 @@ use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
  * @property string $fingerprint
  * @property string $channel
  * @property int $attempt
- * @property Carbon $sent_at
+ * @property CarbonImmutable $sent_at
  * @property array $notifiable
  * @property bool $queued
  * @property string $message
@@ -50,6 +51,7 @@ class SentNotificationLog extends Model
         'data' => 'json',
         'anonymous_notifiable_routes' => 'array',
         'status' => NotificationDeliveryStatus::class,
+        'sent_at' => 'immutable_datetime',
     ];
 
     public function prunable(): Builder
