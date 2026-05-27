@@ -2,6 +2,27 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v6.1.0 - 2026-05-27
+
+### What's Changed
+
+* chore(deps): bump shivammathur/setup-php from 2.37.0 to 2.37.1 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/25
+* chore(deps): bump dependabot/fetch-metadata from 2.5.0 to 3.1.0 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/24
+* chore(deps): bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/okaufmann/laravel-notification-log/pull/19
+* Changed `notification_serialized` from `text` to `mediumText`.
+
+### How to Upgrade
+
+Existing installations should add and run a migration:
+
+```php
+Schema::table('notification_logs_sent_notifications', function (Blueprint $table) {
+    $table->mediumText('notification_serialized')->nullable()->change();
+});
+
+```
+**Full Changelog**: https://github.com/okaufmann/laravel-notification-log/compare/v6.0.0...v6.1.0
+
 ## v6.0.0 - 2026-03-23
 
 ### What's Changed
@@ -139,11 +160,13 @@ return new class extends Migration {
 
 
 
+
 ```
 Also you may want to publish the configs by running
 
 ```shell
 php artisan vendor:publish --tag="notification-log-config"
+
 
 
 
@@ -266,6 +289,7 @@ return new class extends Migration {
         return $data;
     }
 };
+
 
 
 
