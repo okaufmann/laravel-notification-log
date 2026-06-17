@@ -399,6 +399,20 @@ class NotificationLogger
             : null;
     }
 
+    public function getNotificationKey(NotificationSending|NotificationSent|NotificationFailed $event): string
+    {
+        if (! $event->notification instanceof ShouldLogNotification) {
+            return '';
+        }
+
+        return 'notification-logger:'.md5(implode('-', [
+            $this->getNotificationId($event->notification),
+            $this->getNotificationType($event),
+            $this->resolveChannel($event->channel),
+            $event->notification->getCurrentAttempt(),
+        ]));
+    }
+
     protected function getNotificationType(NotificationSending|NotificationSent|NotificationFailed $event): string
     {
         $notification = $event->notification;
